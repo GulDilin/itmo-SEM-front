@@ -1,0 +1,16 @@
+* {
+  scrollbar-width: thin;
+  scrollbar-color: gray transparent;
+}
+
+*::-webkit-scrollbar {
+  @apply h-2 w-2;
+}
+
+*::-webkit-scrollbar-track {
+  @apply rounded-lg;
+}
+
+*::-webkit-scrollbar-thumb {
+  @apply rounded-lg bg-gray-500;
+}
