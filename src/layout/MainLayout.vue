@@ -2,7 +2,12 @@
   <div :class="[$style.layout, { [$style.noScroll]: $route.meta.layoutNoScroll }]">
     <div :class="$style.contentLayoutWrapper">
       <div :class="$style.contentWrapper">
+        <MainHeader></MainHeader>
         <div class="bg-black text-white">Main layout</div>
+        <div class="flex-col items-start p-4 text-black">
+          <v-icon icon="mdi-home" />
+          <v-text-field label="Label" variant="outlined" density="compact" clearable />
+        </div>
         <div :class="$style.content"><slot /></div>
       </div>
     </div>
@@ -10,6 +15,8 @@
 </template>
 
 <script setup>
+// import { mdiAccount  } from '@mdi
+import MainHeader from './MainHeader'
 defineProps({})
 </script>
 

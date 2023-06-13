@@ -14,7 +14,7 @@ body {
 
 @tailwind base;
 h1 {
-  @apply text-2xl font-semibold;
+  @apply text-2xl font-bold;
 }
 h2 {
   @apply text-xl font-bold;
@@ -27,9 +27,6 @@ h4 {
 }
 h5 {
   @apply text-sm font-bold;
-}
-h6 {
-  @apply text-xs font-bold;
 }
 
 @layer base {
