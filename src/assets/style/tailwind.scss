@@ -2,12 +2,22 @@
 @import 'scrollbar';
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');
 
+@font-face {
+  font-family: "Balkara Free Condensed";
+  src: url("/fonts/BalkaraFreeCondensed.ttf") format("truetype");
+  font-weight: normal, 400, 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+$body-font-family: "Balkara Free Condensed";
+
 html {
   @apply h-full;
 }
 
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: $body-font-family;
   font-style: normal;
   @apply flex h-full text-base font-light text-main;
 }

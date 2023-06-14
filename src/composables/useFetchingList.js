@@ -34,7 +34,7 @@ export const fetchAllStart = async ({
       loadingKeyNew = ++loadingKey.value
     }
     filter = isRef(filter) ? filter.value : filter
-    provider({ filter: filter, options })
+    provider(filter, options)
       .then(async response => {
         const { data } = response
         items.value = data.results

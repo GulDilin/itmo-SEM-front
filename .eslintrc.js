@@ -7,6 +7,7 @@ module.exports = {
   },
   extends: [
     'plugin:vue/vue3-recommended',
+    'plugin:vuetify/base',
     'eslint:recommended',
     'plugin:import/recommended',
     'plugin:tailwindcss/recommended',
@@ -46,7 +47,17 @@ module.exports = {
     'vue/no-undef-components': [
       'error',
       {
-        ignorePatterns: ['router-link', 'router-view', 'recycle-scroller', 'dynamic-scroller-item', 'dynamic-scroller'],
+        ignorePatterns: [
+          'router-link',
+          'router-view',
+          'recycle-scroller',
+          'dynamic-scroller-item',
+          'dynamic-scroller',
+          'v-layout',
+          'v-app',
+          'v-main',
+          'v-container'
+        ],
       },
     ],
     'vue/no-v-model-argument': 'off',
