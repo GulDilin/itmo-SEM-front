@@ -1,4 +1,5 @@
 <template>
+  <v-button>New</v-button>
   <OrderTable />
 </template>
 
