@@ -1,7 +1,7 @@
 import order from './order'
-// import orderType from './orderType'
+import orderType from './orderType'
 
 export default {
   order,
-  // orderType,
+  orderType,
 }

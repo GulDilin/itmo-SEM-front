@@ -2,7 +2,7 @@
 import useItemsFetcher from '@/composables/useItemsFetcher'
 import api from '@/api'
 
-const { get, getNext } = api.order
+const { get, getNext } = api.orderType
 const { items, loading, fetchItemsStart, fetchItemsNext } = useItemsFetcher(get, getNext)
 
 fetchItemsStart()
