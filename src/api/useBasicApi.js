@@ -1,14 +1,16 @@
 import { createFilterURL } from '@/utils/urls'
 
 export default function useBasicApi(axios, ENDPOINT) {
-  const create = async (item) =>
-    axios.post(`${ENDPOINT}/`, item)
-      .then(response =>  Promise.resolve(response))
+  const create = async item =>
+    axios
+      .post(`${ENDPOINT}/`, item)
+      .then(response => Promise.resolve(response))
       .catch(error => Promise.reject(error))
 
   const update = async (id, item) =>
-    axios.put(`${ENDPOINT}/${id}/`, item)
-      .then(response =>  Promise.resolve(response))
+    axios
+      .put(`${ENDPOINT}/${id}/`, item)
+      .then(response => Promise.resolve(response))
       .catch(error => Promise.reject(error))
 
   const get = async (filter = {}, options = {}) =>
@@ -16,7 +18,7 @@ export default function useBasicApi(axios, ENDPOINT) {
       .then(response => Promise.resolve(response))
       .catch(error => Promise.reject(error))
 
-  const getById = async (id) =>
+  const getById = async id =>
     axios({ method: 'get', url: `${ENDPOINT}/${id}/` })
       .then(response => Promise.resolve(response))
       .catch(error => Promise.reject(error))

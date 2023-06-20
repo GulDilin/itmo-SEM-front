@@ -10,7 +10,10 @@ fetchItemsStart()
 
 <template>
   <div class="flex flex-col">
-    <v-card v-for="item in items" :key="item.id">
+    <v-card
+      v-for="item in items"
+      :key="item.id"
+    >
       <v-card-title>{{ item.id }}</v-card-title>
     </v-card>
   </div>

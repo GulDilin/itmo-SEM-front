@@ -16,9 +16,9 @@ defineProps({
 
 <style module lang="sass">
 .panel
-  @apply flex
+  @apply tw-flex
   &.vertical
-    @apply flex-col overflow-y-auto min-h-0
+    @apply tw-flex-col tw-overflow-y-auto tw-min-h-0
   &.horizontal
-    @apply flex-row overflow-x-auto min-w-0
+    @apply tw-flex-row tw-overflow-x-auto tw-min-w-0
 </style>

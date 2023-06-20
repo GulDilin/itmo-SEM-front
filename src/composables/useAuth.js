@@ -7,6 +7,18 @@ export const user = ref({
   accessToken: '',
   data: {},
 })
+export const token = ref()
+export const keycloak = ref()
+export const tokenParsed = ref()
+
+export const setKeycloak = data => {
+  keycloak.value = data
+}
+export const setToken = data => {
+  token.value = data.token
+  tokenParsed.value = data.tokenParsed
+  config.urls.AXIOS_API.defaults.headers.common['Authorization'] = `Bearer ${token.value}`
+}
 
 const localStorageAccessTokenKey = 'user.access_token'
 
@@ -23,7 +35,7 @@ const getJwtPayload = token => {
   }
 }
 
-export const signIn = ({ token, assignRoute = undefined, reload = true }) => {
+export const signIn = ({ token, assignRoute = undefined, reload = false }) => {
   try {
     user.value.data = getJwtPayload(token)
     user.value.accessToken = token
@@ -37,7 +49,7 @@ export const signIn = ({ token, assignRoute = undefined, reload = true }) => {
   else if (reload) location.reload()
 }
 
-export const signOut = ({ assignRoute = undefined, reload = true } = {}) => {
+export const signOut = ({ assignRoute = undefined, reload = false } = {}) => {
   removeStoredToken()
   if (assignRoute) location.assign(assignRoute)
   else if (reload) location.reload()

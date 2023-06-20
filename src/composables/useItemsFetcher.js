@@ -44,15 +44,17 @@ export default function useItemsFetcher(provider, providerNext, filter, settings
 
   const fetchItemsNext = debounce(fetchItemsNextV, 50)
 
-  const fetchItemsAll = async () =>
-    fetchAll({
+  const fetchItemsAll = async () => {
+    loading.value = true
+    return fetchAll({
       provider,
       providerNext,
       items,
       filter,
       cancel,
       settings,
-    })
+    }).finally(() => (loading.value = false))
+  }
 
   return {
     items,

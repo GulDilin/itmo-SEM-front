@@ -1,17 +1,47 @@
 <template>
-  <div class="bg-primary flex justify-center">
-    <div class="py-4 flex items-center  text-light gap-4 layout-container">
-      <div class="text-xl font-bold flex-none">
-        САС-ИП-СА
-      </div>
-      <div class="grow"></div>
-      <div class="flex-none text-lg">
-        Сотрудник
-      </div>
-      <v-avatar size="56" class="bg-white text-primary">
-        <v-icon icon="mdi-avatar"></v-icon>
-      </v-avatar>
+  <div class="bg-primary tw-flex tw-justify-center">
+    <div class="tw-flex tw-items-center tw-gap-4 tw-py-4 tw-text-theme-light tw-layout-container">
+      <div class="tw-flex-none tw-text-xl tw-font-bold">САС-ИП-СА</div>
+      <div class="tw-grow"></div>
+      <v-menu>
+        <template #activator="{ props }">
+          <div class="tw-rounded-xl">
+            <v-list-item
+              v-bind="props"
+              append-avatar="https://randomuser.me/api/portraits/men/1.jpg"
+              :title="tokenParsed?.preferred_username"
+              :subtitle="tokenParsed?.roles?.join(', ')"
+              class="tw-rounded-xl"
+              rounded="lg"
+            />
+          </div>
+        </template>
+        <template #default>
+          <v-card class="tw-p-2">
+            <v-list>
+              <v-list-item
+                density="compact"
+                :href="keycloak?.createAccountUrl()"
+                :prepend-icon="mdiAccount"
+              >
+                Profile page
+              </v-list-item>
+              <v-list-item
+                density="compact"
+                :prepend-icon="mdiLogout"
+                @click="keycloak?.logout()"
+              >
+                Logout
+              </v-list-item>
+            </v-list>
+          </v-card>
+        </template>
+      </v-menu>
     </div>
   </div>
 </template>
 
+<script setup>
+import { mdiAccount, mdiLogout } from '@mdi/js'
+import { keycloak, tokenParsed } from '@/composables/useAuth'
+</script>

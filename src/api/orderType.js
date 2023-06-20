@@ -1,6 +1,6 @@
-import config from '@/config'
-import useBasicApi from './useBasicApi'
 import orderTypeParams from './orderTypeParams'
+import useBasicApi from './useBasicApi'
+import config from '@/config'
 
 const axios = config.urls.AXIOS_API
 const ENDPOINT = 'order_type'

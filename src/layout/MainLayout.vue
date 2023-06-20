@@ -1,11 +1,22 @@
 <template>
-  <v-layout class="bg-purple">
-    <v-app-bar height="80" flat>
-      <MainHeader class="w-full"/>
+  <v-layout>
+    <v-app-bar
+      height="80"
+      elevation="3"
+    >
+      <MainHeader class="tw-w-full" />
     </v-app-bar>
-    <v-main scrollable>
-      <v-container fluid class="px-0">
-        <div class="layout-container mx-auto">
+    <MainLayoutNav />
+
+    <v-main
+      scrollable
+      class="tw-bg-theme-purple"
+    >
+      <v-container
+        fluid
+        class="px-0"
+      >
+        <div class="tw-mx-auto tw-layout-container">
           <slot></slot>
         </div>
       </v-container>
@@ -15,5 +26,8 @@
 
 <script setup>
 import MainHeader from './MainHeader'
+import MainLayoutNav from './MainLayoutNav'
+import { mdiHome } from '@mdi/js'
+
 defineProps({})
 </script>

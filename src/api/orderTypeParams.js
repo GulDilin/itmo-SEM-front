@@ -1,5 +1,5 @@
-import config from '@/config'
 import useBasicApi from './useBasicApi'
+import config from '@/config'
 
 const axios = config.urls.AXIOS_API
 

@@ -1,14 +1,10 @@
-import orderParams from './orderParams'
 import useBasicApi from './useBasicApi'
 import config from '@/config'
 
 const axios = config.urls.AXIOS_API
-const ENDPOINT = 'order'
+const ENDPOINT = 'admin/users'
 
 export default {
   ENDPOINT,
   ...useBasicApi(axios, ENDPOINT),
-  for: orderId => ({
-    params: orderParams(ENDPOINT, orderId),
-  }),
 }
