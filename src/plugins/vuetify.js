@@ -9,18 +9,18 @@ import 'vuetify/styles'
 
 // import { aliases, mdi } from 'vuetify/iconsets/mdi'
 
-const mpiTheme = {
-  dark: false,
-  colors: {
-    background: '#8E5572',
-    surface: '#F2F7F2',
-    primary: '#443850',
-    'theme-brown': '#BCAA99',
-    'theme-light': '#F2F7F2',
-    'theme-purple': '#8E5572',
-    'theme-green': '#BBBE64',
-  },
-}
+// const mpiTheme = {
+//   dark: false,
+//   colors: {
+//     background: '#8E5572',
+//     surface: '#F2F7F2',
+//     primary: '#443850',
+//     'theme-brown': '#BCAA99',
+//     'theme-light': '#F2F7F2',
+//     'theme-purple': '#8E5572',
+//     'theme-green': '#BBBE64',
+//   },
+// }
 
 export default createVuetify({
   components,
@@ -34,7 +34,19 @@ export default createVuetify({
     },
   },
   themes: {
-    defaultTheme: 'mpiTheme',
-    mpiTheme,
+    defaultTheme: 'light',
+    // mpiTheme,
+    light: {
+      dark: false,
+      colors: {
+        background: '#8E5572',
+        surface: '#F2F7F2',
+        primary: '#443850',
+        'theme-brown': '#BCAA99',
+        'theme-light': '#F2F7F2',
+        'theme-purple': '#8E5572',
+        'theme-green': '#BBBE64',
+      },
+    },
   },
 })

@@ -15,7 +15,7 @@ console.log({ Keycloak })
 
 addAxiosErrorHandler(config.urls.AXIOS_API)
 
-let keycloak = Keycloak(`${config.urls.URL_API}/api/admin/auth/config`)
+let keycloak = Keycloak(`${config.urls.URL_API}/api/admin/auth/config/`)
 
 keycloak.init({ onLoad: 'login-required' }).then(async auth => {
   if (!auth) {
@@ -42,8 +42,8 @@ keycloak.init({ onLoad: 'login-required' }).then(async auth => {
       .updateToken(70)
       .then(refreshed => {
         if (refreshed) {
-          console.log(`Token refreshed ${refreshed}`)
           setToken({ token: keycloak.token, tokenParsed: keycloak.tokenParsed })
+          console.log({ token: keycloak.token })
         }
       })
       .catch(() => {

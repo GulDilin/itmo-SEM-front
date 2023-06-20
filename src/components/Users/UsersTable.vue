@@ -1,9 +1,20 @@
 <template>
-  <div class="tw-rounded-xl">
+  <div class="tw-rounded-xl tw-bg-white tw-pb-2">
+    <div class="tw-p-2">
+      <v-text-field
+        v-model="search"
+        :append-icon="mdiMagnify"
+        label="Search"
+        variant="outlined"
+        density="compact"
+        hide-details
+      />
+    </div>
     <v-data-table-virtual
       :headers="headers"
       :items="items"
       :loading="loading"
+      :search="search"
       item-value="id"
       density="compact"
     >
@@ -23,7 +34,7 @@
       <template #item.actions="{ item }">
         <slot
           name="item.actions"
-          :item="item.columns"
+          :item="item"
         />
       </template>
     </v-data-table-virtual>
@@ -31,6 +42,8 @@
 </template>
 
 <script setup>
+import { mdiMagnify } from '@mdi/js'
+import { ref } from 'vue'
 import { VDataTableVirtual } from 'vuetify/labs/VDataTable'
 import useItemsFetcher from '@/composables/useItemsFetcher'
 import api from '@/api'
@@ -51,6 +64,7 @@ const headers = [
     key: 'actions',
   },
 ]
+const search = ref('')
 
 fetchItemsAll()
 </script>

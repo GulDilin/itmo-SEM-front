@@ -1,3 +1,4 @@
+import order from './order'
 import orderTypeParams from './orderTypeParams'
 import useBasicApi from './useBasicApi'
 import config from '@/config'
@@ -10,5 +11,6 @@ export default {
   ...useBasicApi(axios, ENDPOINT),
   for: orderTypeId => ({
     params: orderTypeParams(ENDPOINT, orderTypeId),
+    orders: order(ENDPOINT, orderTypeId),
   }),
 }

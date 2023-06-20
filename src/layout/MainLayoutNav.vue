@@ -1,8 +1,8 @@
 <template>
   <v-navigation-drawer
-    color="primary"
+    color=""
     elevation="3"
-    class="tw-bg-primary tw-bg-opacity-50"
+    class="!tw-bg-primary tw-bg-opacity-50"
     width="300"
   >
     <v-list>
@@ -10,7 +10,7 @@
         class="tw-w-full tw-text-light"
         max-width="250"
       >
-        <span class="tw--ml-3 tw-pl-layout-container"> Заявки </span>
+        <span class="tw--ml-3 !tw-text-light tw-pl-layout-container"> Заявки </span>
       </v-list-subheader>
       <v-divider />
       <v-list-item
@@ -21,7 +21,7 @@
         class="tw-pl-layout-container"
       >
         <template #title>
-          <span class="tw--ml-3 tw-pl-layout-container">
+          <span class="tw--ml-3 !tw-text-light tw-pl-layout-container">
             {{ item.name }}
           </span>
         </template>
@@ -40,8 +40,10 @@ import { watch } from 'vue'
 import useItemsFetcher from '@/composables/useItemsFetcher'
 import api from '@/api'
 
+const emit = defineEmits(['update:order-types'])
+
 const { get, getNext } = api.orderType
 const { items, loading, fetchItemsAll } = useItemsFetcher(get, getNext)
-
 fetchItemsAll()
+watch(items, v => emit('update:order-types', v), { immediate: true })
 </script>

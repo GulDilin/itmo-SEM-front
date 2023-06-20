@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-primary tw-flex tw-justify-center">
+  <div class="tw-flex tw-justify-center tw-bg-primary">
     <div class="tw-flex tw-items-center tw-gap-4 tw-py-4 tw-text-theme-light tw-layout-container">
       <div class="tw-flex-none tw-text-xl tw-font-bold">САС-ИП-СА</div>
       <div class="tw-grow"></div>
@@ -10,7 +10,7 @@
               v-bind="props"
               append-avatar="https://randomuser.me/api/portraits/men/1.jpg"
               :title="tokenParsed?.preferred_username"
-              :subtitle="tokenParsed?.roles?.join(', ')"
+              :subtitle="rolesStr"
               class="tw-rounded-xl"
               rounded="lg"
             />
@@ -43,5 +43,9 @@
 
 <script setup>
 import { mdiAccount, mdiLogout } from '@mdi/js'
+import { computed } from 'vue'
 import { keycloak, tokenParsed } from '@/composables/useAuth'
+import { getRolesString } from '@/enums'
+
+const rolesStr = computed(() => getRolesString(tokenParsed.value?.roles))
 </script>

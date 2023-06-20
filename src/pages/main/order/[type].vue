@@ -1,36 +1,26 @@
 <template>
-  <div>
-    <div>
-      {{ type }}
+  <div class="tw-relative">
+    <div class="tw-absolute tw-top-0 -tw-left-12">
+      <v-progress-circular
+        v-if="loading || loadingView"
+        indeterminate
+      />
     </div>
-    <v-progress-circular
-      v-if="loading"
-      indeterminate
-      class="tw-m-2"
-    />
-    <v-alert v-if="error">Произошла ошибка</v-alert>
-    <!-- <div>
-      {{ orderType }}
-    </div> -->
-    <v-dialog
-      v-if="success"
-      width="400"
+    <v-alert
+      v-if="error"
+      type="error"
+      >Произошла ошибка</v-alert
     >
-      <template #activator="{ props }">
-        <v-btn v-bind="props">Создать</v-btn>
-      </template>
-      <template #default>
-        <OrderForm :order-type="orderType"></OrderForm>
-      </template>
-    </v-dialog>
-    <UsersTable></UsersTable>
+    <RouterView
+      v-model:loading="loadingView"
+      :key="orderType?.id"
+      :order-type="orderType"
+    />
   </div>
 </template>
 
 <script setup>
 import { ref, watch } from 'vue'
-import OrderForm from '@/components/Order/OrderForm'
-import UsersTable from '@/components/Users/UsersTable'
 import { useApiCall } from '@/composables/useApiCall'
 import api from '@/api'
 
@@ -40,6 +30,7 @@ const props = defineProps({
     default: '',
   },
 })
+const loadingView = ref(false)
 
 const orderType = ref()
 const { call: getById, loading, error, success } = useApiCall(api.orderType.getById)

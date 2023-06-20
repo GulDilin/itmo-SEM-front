@@ -67,6 +67,13 @@ module.exports = {
           'v-list-item',
           'v-menu',
           'v-card',
+          'v-dialog',
+          'v-alert',
+          'v-rogress-circular',
+          'v-timeline',
+          'v-timeline-item',
+          'v-form',
+          'v-select',
           'v-container'
         ],
       },

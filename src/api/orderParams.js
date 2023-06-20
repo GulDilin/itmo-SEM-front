@@ -4,9 +4,12 @@ import config from '@/config'
 const axios = config.urls.AXIOS_API
 
 export default function orderParamsApi(parent, orderId) {
-  const ENDPOINT = `${parent}/${orderId}`
+  const ENDPOINT = `${parent}/${orderId}/params`
   return {
     ENDPOINT,
-    ...useBasicApi(axios, ENDPOINT),
+    get: useBasicApi(axios, ENDPOINT).get,
+    for: paramTypeid => ({
+      ...useBasicApi(axios, `${ENDPOINT}/${paramTypeid}`),
+    }),
   }
 }

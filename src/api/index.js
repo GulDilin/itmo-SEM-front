@@ -1,9 +1,14 @@
-import order from './order'
 import orderType from './orderType'
+import useBasicApi from './useBasicApi'
 import users from './users'
+import config from '@/config'
+
+const axios = config.urls.AXIOS_API
 
 export default {
-  order,
   orderType,
   users,
+  orders: {
+    ...useBasicApi(axios, 'order'),
+  },
 }

@@ -6,7 +6,7 @@
     >
       <MainHeader class="tw-w-full" />
     </v-app-bar>
-    <MainLayoutNav />
+    <MainLayoutNav @update:order-types="orderTypes = $event" />
 
     <v-main
       scrollable
@@ -27,7 +27,9 @@
 <script setup>
 import MainHeader from './MainHeader'
 import MainLayoutNav from './MainLayoutNav'
-import { mdiHome } from '@mdi/js'
+import { provide, ref, watch } from 'vue'
 
-defineProps({})
+const orderTypes = ref()
+provide('orderTypes', orderTypes)
+watch(orderTypes, v => console.log({ orderTypesLayout: v }), { immediate: true })
 </script>

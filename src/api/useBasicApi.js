@@ -18,8 +18,8 @@ export default function useBasicApi(axios, ENDPOINT) {
       .then(response => Promise.resolve(response))
       .catch(error => Promise.reject(error))
 
-  const getById = async id =>
-    axios({ method: 'get', url: `${ENDPOINT}/${id}/` })
+  const getById = async (id, options = {}) =>
+    axios({ ...options, method: 'get', url: `${ENDPOINT}/${id}/` })
       .then(response => Promise.resolve(response))
       .catch(error => Promise.reject(error))
 
