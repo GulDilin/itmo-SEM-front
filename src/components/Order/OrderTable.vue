@@ -9,6 +9,10 @@ const props = defineProps({
   orderType: {
     type: Object,
   },
+  showParentOrder: {
+    type: Boolean,
+    default: false,
+  },
   api: {
     type: Object,
   },
@@ -24,15 +28,18 @@ const { items, loading, fetchItemsStart, fetchItemsNext } = useItemsFetcher(get,
 fetchItemsStart()
 
 watch(loading, v => emit('update:loading', v))
+
+defineExpose({ refresh: fetchItemsStart })
 </script>
 
 <template>
-  <div class="tw-grid tw-grid-cols-2 tw-gap-2 tw-rounded-xl">
+  <div class="tw-grid tw-grid-cols-2 tw-gap-4 tw-rounded-xl">
+    <slot name="prepend" />
     <OrderCard
-      v-for="item in items"
+      v-for="(item, i) in items"
       :key="item.id"
-      :item="item"
-      :to="{ name: 'main-order-type-id', params: { ...$route.params, id: item.id } }"
+      v-model:item="items[i]"
+      :show-parent-order="showParentOrder"
     />
     <AppIntersectLoader @shown="fetchItemsNext" />
   </div>

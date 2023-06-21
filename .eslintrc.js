@@ -74,6 +74,7 @@ module.exports = {
           'v-timeline-item',
           'v-form',
           'v-select',
+          'v-progress-circular',
           'v-container'
         ],
       },

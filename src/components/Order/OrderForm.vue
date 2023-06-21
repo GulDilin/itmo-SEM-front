@@ -4,17 +4,12 @@
       {{ orderType.name }}
     </v-card-title>
     <v-card-text>
-      <v-form>
-        <v-text-field
+      <v-form ref="form">
+        <OrderFormField
           v-for="param in orderType?.params"
           :key="param?.id"
           v-model="data[param?.name]"
-          :label="param?.name"
-          density="compact"
-          variant="outlined"
-          required
-          :disabled="loading"
-          clearable
+          :param="param"
         />
       </v-form>
     </v-card-text>
@@ -30,6 +25,7 @@
 </template>
 
 <script setup>
+import OrderFormField from './OrderFormField'
 import { ref, watch } from 'vue'
 import { tokenParsed } from '@/composables/useAuth'
 import api from '@/api'
@@ -54,8 +50,10 @@ watch(
 )
 
 const loading = ref()
+const form = ref()
 const confirm = async () => {
-  console.log({ confirm: { ...data.value } })
+  const validateResult = await form.value?.validate()
+  if (!validateResult.valid) return
   loading.value = true
   try {
     const { data: created } = await api.orderType.for(props.orderType?.id).orders.create({

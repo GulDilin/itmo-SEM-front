@@ -9,11 +9,12 @@
     <v-alert
       v-if="error"
       type="error"
-      >Произошла ошибка</v-alert
     >
+      Произошла ошибка
+    </v-alert>
     <RouterView
+      :key="$route.path"
       v-model:loading="loadingView"
-      :key="orderType?.id"
       :order-type="orderType"
     />
   </div>
@@ -33,7 +34,7 @@ const props = defineProps({
 const loadingView = ref(false)
 
 const orderType = ref()
-const { call: getById, loading, error, success } = useApiCall(api.orderType.getById)
+const { call: getById, loading, error } = useApiCall(api.orderType.getById)
 watch(
   () => props.type,
   async v => {

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="tw-relative">
     <v-timeline
       direction="horizontal"
       side="end"
@@ -32,8 +32,9 @@
                 <v-btn
                   density="compact"
                   @click="selectCustomer(item)"
-                  >Выбрать</v-btn
                 >
+                  Выбрать
+                </v-btn>
               </template>
             </UsersTable>
           </div>
@@ -59,7 +60,7 @@
             />
             <OrderCard
               v-if="mainOrder"
-              :item="mainOrder"
+              v-model:item="mainOrder"
             />
           </div>
         </template>
@@ -75,52 +76,45 @@
           <span class="item-title">Опции</span>
         </template>
         <template #default>
-          <div
-            v-if="step > 0"
-            class="item-col"
+          <OrderFormOption
+            v-if="step > 2"
+            :parent-order="mainOrder"
+            :customer-id="customer?.id"
+            @created="fetchItemsStart"
           >
-            <v-btn
-              v-if="!isOptionAdding"
-              @click="isOptionAdding = true"
-            >
-              Добавить опцию
-            </v-btn>
-            <v-card v-if="isOptionAdding">
-              <v-select
-                v-model="optionOrderType"
-                :items="orderTypes"
-                item-value="id"
-                item-title="name"
-                variant="outlined"
-                density="compact"
-                class="tw-m-2"
+            <template #append>
+              <OrderCard
+                v-for="(item, i) in subOrders"
+                :key="item?.id"
+                v-model:item="subOrders[i]"
               />
-              <OrderForm
-                v-if="optionOrderType"
-                :user-customer="customer?.id"
-                :parent-order-id="mainOrder?.id"
-                :order-type="orderTypes?.findBy({ id: optionOrderType })"
-                @created="onCreatedOption"
-              />
-            </v-card>
-            <OrderCard
-              v-for="item in subOrders"
-              :key="item?.id"
-              :item="item"
-            />
-            <AppIntersectLoader @shown="fetchItemsNext" />
-          </div>
+              <AppIntersectLoader @shown="fetchItemsNext" />
+            </template>
+          </OrderFormOption>
         </template>
       </v-timeline-item>
     </v-timeline>
+
+    <div
+      v-if="mainOrder"
+      class="tw-fixed tw-right-4 tw-bottom-4"
+    >
+      <v-btn
+        color="white"
+        :to="{ name: 'main-order-type-id', params: { ...$route.params, id: mainOrder.id } }"
+      >
+        Завершить
+      </v-btn>
+    </div>
   </div>
 </template>
 
 <script setup>
 import OrderCard from './OrderCard'
 import OrderForm from './OrderForm'
+import OrderFormOption from './OrderFormOption'
 import { mdiCheck } from '@mdi/js'
-import { computed, inject, ref, watch } from 'vue'
+import { computed, ref } from 'vue'
 import AppIntersectLoader from '@/components/App/AppIntersectLoader'
 import UserCard from '@/components/Users/UserCard'
 import UsersTable from '@/components/Users/UsersTable'
@@ -161,22 +155,7 @@ const onCreated = async item => {
 }
 const filter = computed(() => ({ sort: '-created_at', parent_order_id: mainOrder.value?.id }))
 const { get, getNext } = api.orders
-const {
-  items: subOrders,
-  loading,
-  fetchItemsStart,
-  fetchItemsNext,
-} = useItemsFetcher(get, getNext, filter)
-
-const isOptionAdding = ref(false)
-const optionOrderType = ref()
-const orderTypes = inject('orderTypes')
-watch(orderTypes, v => console.log({ orderTypes: v }), { immediate: true })
-const onCreatedOption = () => {
-  optionOrderType.value = undefined
-  isOptionAdding.value = false
-  fetchItemsStart()
-}
+const { items: subOrders, fetchItemsStart, fetchItemsNext } = useItemsFetcher(get, getNext, filter)
 </script>
 
 <style scoped lang="sass">

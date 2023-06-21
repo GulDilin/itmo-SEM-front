@@ -12,23 +12,12 @@
     >
       Произошла ошибка
     </v-alert>
-    <OrderCard
-      v-if="item"
-      :item="item"
-    />
-    <div class="tw-my-4 tw-text-lg tw-text-light">Связанные</div>
-    <OrderTable
-      v-if="item"
-      :api="api.orders"
-      :filter="{ parent_order_id: id }"
-    />
+    <RouterView v-model:order="item" />
   </div>
 </template>
 
 <script setup>
 import { ref, watch } from 'vue'
-import OrderCard from '@/components/Order/OrderCard'
-import OrderTable from '@/components/Order/OrderTable'
 import { useApiCall } from '@/composables/useApiCall'
 import api from '@/api'
 
