@@ -42,7 +42,16 @@
             class="tw--mx-4"
           />
         </div>
-        <div class="tw--m-4 tw-mt-0 tw-bg-brown tw-bg-opacity-50 tw-p-4">
+        <div
+          v-if="!editMode"
+          class="tw-relative tw--m-4 tw-mt-0 tw-bg-brown tw-bg-opacity-50 tw-p-4"
+        >
+          <div v-if="editable" class="tw-absolute tw-top-2 tw-right-2">
+            <v-btn
+              :icon="mdiPencil"
+              @click.prevent="editMode = true"
+            />
+          </div>
           <div class="pb-2">Параметры</div>
           <div
             v-for="param in item?.order_type?.params"
@@ -58,6 +67,13 @@
           </div>
           <div class="pt-2">Связанных заявок: {{ total }}</div>
         </div>
+        <OrderForm
+          v-if="editMode"
+          :editable-order="item"
+          :order-type="item?.order_type"
+          @saved="onSave"
+          @click.stop.prevent
+        />
       </v-card-text>
 
       <v-card-actions>
@@ -126,6 +142,8 @@
 </template>
 
 <script setup>
+import OrderForm from './OrderForm'
+import { mdiPencil } from '@mdi/js'
 import { computed, ref } from 'vue'
 import AppStatus from '@/components/App/AppStatus'
 import UserCardWrapped from '@/components/Users/UserCardWrapped'
@@ -143,6 +161,7 @@ const props = defineProps({
     default: false,
   },
   noLink: Boolean,
+  editable: Boolean,
 })
 const emit = defineEmits(['update:item'])
 
@@ -163,5 +182,11 @@ if (props.item?.parent_order_id) {
   getOrder(props.item?.parent_order_id).then(({ data }) => {
     parentOrder.value = data
   })
+}
+
+const editMode = ref(false)
+const onSave = it => {
+  emit('update:item', it)
+  editMode.value = false
 }
 </script>

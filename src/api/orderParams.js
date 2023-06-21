@@ -10,6 +10,12 @@ export default function orderParamsApi(parent, orderId) {
     get: useBasicApi(axios, ENDPOINT).get,
     for: paramTypeid => ({
       ...useBasicApi(axios, `${ENDPOINT}/${paramTypeid}`),
+      update: async (item) =>
+        axios
+          .put(`${ENDPOINT}/${paramTypeid}/`, item)
+          .then(response => Promise.resolve(response))
+          .catch(error => Promise.reject(error))
+
     }),
   }
 }

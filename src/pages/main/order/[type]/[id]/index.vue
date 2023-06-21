@@ -3,6 +3,8 @@
     <OrderCard
       v-if="order"
       :item="order"
+      editable
+      no-link
       @update:item="emit('update:order', $event)"
     />
     <div class="tw-my-4 tw-text-lg tw-text-light">Связанные</div>
@@ -28,10 +30,10 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, defineAsyncComponent } from 'vue'
 import OrderCard from '@/components/Order/OrderCard'
-import OrderFormOption from '@/components/Order/OrderFormOption'
-import OrderTable from '@/components/Order/OrderTable'
+const OrderFormOption = defineAsyncComponent(() => import('@/components/Order/OrderFormOption'))
+const OrderTable = defineAsyncComponent(() => import('@/components/Order/OrderTable'))
 import api from '@/api'
 import { OrderDepType, OrderStatus } from '@/enums'
 

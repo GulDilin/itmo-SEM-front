@@ -8,7 +8,7 @@
         <OrderFormField
           v-for="param in orderType?.params"
           :key="param?.id"
-          v-model="data[param?.name]"
+          v-model="data[param?.id]"
           :param="param"
         />
       </v-form>
@@ -35,23 +35,46 @@ const props = defineProps({
     type: Object,
     default: () => ({}),
   },
+  editableOrder: Object,
   userCustomer: String,
   parentOrderId: String,
 })
-const emit = defineEmits(['created'])
+const emit = defineEmits(['created', 'saved'])
 
 const data = ref({})
 watch(
   () => props.orderType,
   v => {
     data.value = {}
-    v?.params?.forEach(({ name }) => (data.value[name] = undefined))
-  }
-)
+    v?.params?.forEach(({ id }) => (data.value[id] = undefined))
+    if (props.editableOrder) {
+      props.editableOrder?.params?.forEach(
+        ({ value, order_type_param_id}) => (data.value[order_type_param_id] = value)
+      )
+    }
+  }, { immediate: true })
+
 
 const loading = ref()
 const form = ref()
-const confirm = async () => {
+
+const confirmEdit = async () => {
+  const validateResult = await form.value?.validate()
+  if (!validateResult.valid) return
+  const params = await Promise.all(
+    Object.entries(data.value)
+      .filter(([, value]) => !!value)
+      .map(([key, value]) =>
+        api.orderType
+          .for(props.orderType?.name)
+          .orders.for(props.editableOrder?.id)
+          .params.for(key)
+          .update({ value })
+      )
+  )
+  emit('saved', { ...props.editableOrder, params: params?.map(it => it.data) })
+}
+const confirmCreate = async () => {
   const validateResult = await form.value?.validate()
   if (!validateResult.valid) return
   loading.value = true
@@ -79,5 +102,10 @@ const confirm = async () => {
   } finally {
     loading.value = false
   }
+}
+
+const confirm = async () => {
+  if (props.editableOrder) confirmEdit()
+  else confirmCreate()
 }
 </script>

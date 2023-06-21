@@ -9,11 +9,12 @@
     :disabled="loading"
     clearable
     @update:model-value="emit('update:model-value', $event)"
+    @click.stop.prevent
   />
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import AppDateInput from '@/components/App/AppDateInput'
 import { OrderParamType } from '@/enums'
 import validators from '@/validators'

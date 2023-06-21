@@ -21,8 +21,8 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
-import OrderTable from '@/components/Order/OrderTable'
+import { ref, watch, defineAsyncComponent } from 'vue'
+const OrderTable = defineAsyncComponent(() => import('@/components/Order/OrderTable'))
 import { OrderDepType } from '@/enums'
 
 defineProps({
