@@ -34,7 +34,7 @@ export const fetchAllStart = async ({
       loadingKeyNew = ++loadingKey.value
     }
     filter = isRef(filter) ? filter.value : filter
-    provider({ filter: filter, options })
+    provider(filter, options)
       .then(async response => {
         const { data } = response
         items.value = data.results
@@ -113,7 +113,7 @@ export const fetchAll = async ({
     }
 
     filter = isRef(filter) ? filter.value : filter
-    provider({ filter: filter, options })
+    provider(filter, options)
       .then(({ data }) => {
         items.value.push(...data.results)
         next = data[nextFieldName]

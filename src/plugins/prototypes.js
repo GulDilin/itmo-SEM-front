@@ -3,11 +3,11 @@ import 'core-js/proposals/array-last'
 
 export default {
   install: () => {
-    Object.defineProperty(Object.prototype, 'isEqual', {
-      value: function (another) {
-        return JSON.stringify(this) === JSON.stringify(another)
-      },
-    })
+    // Object.defineProperty(Object.prototype, 'isEqual', {
+    //   value: function (another) {
+    //     return JSON.stringify(this) === JSON.stringify(another)
+    //   },
+    // })
 
     Object.defineProperty(Array.prototype, 'findIndexBy', {
       value: function (by, every = true) {

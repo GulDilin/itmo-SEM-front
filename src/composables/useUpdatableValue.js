@@ -10,22 +10,22 @@ export default function useUpdatableValue(value, emit, options) {
     delay = 0,
   } = options ?? {}
 
-  const innerValue = ref(converter(value.value))
+  const updatableValue = ref(converter(value.value))
   const update = () => {
-    const converted = converter(innerValue.value)
-    if (innerValue.value !== converted) innerValue.value = converted
+    const converted = converter(updatableValue.value)
+    if (updatableValue.value !== converted) updatableValue.value = converted
     if (converted === value.value && !updateAlways) return
     emit(updateEventName, converted)
   }
   const postprocess = delay < 1 ? update : debounce(update, delay)
-  emit(updateEventName, converter(innerValue.value))
-  watch(value, v => (innerValue.value = converter(v)))
-  watch(innerValue, v => {
+  emit(updateEventName, converter(updatableValue.value))
+  watch(value, v => (updatableValue.value = converter(v)))
+  watch(updatableValue, v => {
     if (prevent(v)) return
     postprocess()
   })
 
   return {
-    innerValue,
+    updatableValue,
   }
 }

@@ -1,31 +1,35 @@
 <template>
-  <div :class="[$style.layout, { [$style.noScroll]: $route.meta.layoutNoScroll }]">
-    <div :class="$style.contentLayoutWrapper">
-      <div :class="$style.contentWrapper">
-        <div class="bg-black text-white">Main layout</div>
-        <div :class="$style.content"><slot /></div>
-      </div>
-    </div>
-  </div>
+  <v-layout>
+    <v-app-bar
+      height="80"
+      elevation="3"
+    >
+      <MainHeader class="tw-w-full" />
+    </v-app-bar>
+    <MainLayoutNav @update:order-types="orderTypes = $event" />
+
+    <v-main
+      scrollable
+      class="tw-bg-theme-purple"
+    >
+      <v-container
+        fluid
+        class="px-0"
+      >
+        <div class="tw-mx-auto tw-layout-container">
+          <slot></slot>
+        </div>
+      </v-container>
+    </v-main>
+  </v-layout>
 </template>
 
 <script setup>
-defineProps({})
-</script>
+import MainHeader from './MainHeader'
+import MainLayoutNav from './MainLayoutNav'
+import { provide, ref, watch } from 'vue'
 
-<style module lang="sass">
-.layout
-  @apply h-screen
-  &.noScroll
-    .content, .layout, .contentWrapper
-      @apply overflow-hidden
-  &:not(.noScroll)
-    .contentLayoutWrapper
-      @apply overflow-y-auto
-.content, .layout, .contentLayoutWrapper, .contentWrapper
-  @apply flex flex-col grow min-h-0
-.contentWrapper
-  @apply layout-container mx-auto self-center
-.contentLayoutWrapper
-  @apply min-h-0
-</style>
+const orderTypes = ref()
+provide('orderTypes', orderTypes)
+watch(orderTypes, v => console.log({ orderTypesLayout: v }), { immediate: true })
+</script>

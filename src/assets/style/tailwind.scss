@@ -2,34 +2,41 @@
 @import 'scrollbar';
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');
 
+@font-face {
+  font-family: 'Balkara Free Condensed';
+  src: url('/fonts/BalkaraFreeCondensed.ttf') format('truetype');
+  font-weight: normal, 400, 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+$body-font-family: 'Balkara Free Condensed';
+
 html {
-  @apply h-full;
+  @apply tw-h-full;
 }
 
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: $body-font-family;
   font-style: normal;
-  @apply flex h-full text-base font-light text-main;
+  @apply tw-flex tw-h-full tw-text-base tw-font-light tw-text-theme-main;
 }
 
 @tailwind base;
 h1 {
-  @apply text-2xl font-semibold;
+  @apply tw-text-2xl tw-font-bold;
 }
 h2 {
-  @apply text-xl font-bold;
+  @apply tw-text-xl tw-font-bold;
 }
 h3 {
-  @apply text-lg font-bold;
+  @apply tw-text-lg tw-font-bold;
 }
 h4 {
-  @apply text-base font-bold;
+  @apply tw-text-base tw-font-bold;
 }
 h5 {
-  @apply text-sm font-bold;
-}
-h6 {
-  @apply text-xs font-bold;
+  @apply tw-text-sm tw-font-bold;
 }
 
 @layer base {
@@ -40,7 +47,7 @@ h6 {
     background: #ecefff;
   }
   #app {
-    @apply flex min-h-screen w-full flex-col;
+    @apply tw-flex tw-min-h-screen tw-w-full tw-flex-col;
   }
 }
 

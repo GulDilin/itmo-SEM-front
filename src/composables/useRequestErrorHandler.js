@@ -1,4 +1,3 @@
-import { signOut } from './useAuth'
 import { notifyError } from './useNotifications'
 import axios from 'axios'
 
@@ -73,14 +72,6 @@ export const addAxiosErrorHandler = axiosInstance => {
       // because of multiple args in notify method (for example to will be an index)
       if (!axios.isCancel(error) && !error.config?._dontShowError) {
         getErrorMessages(error).forEach(it => notifyError(it))
-      }
-      if (
-        error?.response?.status === 401 &&
-        error.config &&
-        !error.config.url.startsWith('auth/login')
-      ) {
-        console.log('Sign Out')
-        signOut()
       }
       return Promise.reject(error)
     }
