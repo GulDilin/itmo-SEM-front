@@ -27,7 +27,10 @@
                 <v-btn @click="unselectCustomer">Изменить</v-btn>
               </v-card-actions>
             </v-card>
-            <UsersTable v-if="!customer">
+            <UsersTable
+              v-if="!customer"
+              :filter="{ role_name: 'customer' }"
+            >
               <template #item.actions="{ item }">
                 <v-btn
                   density="compact"

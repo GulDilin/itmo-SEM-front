@@ -34,7 +34,11 @@ const props = defineProps({
 const loadingView = ref(false)
 
 const orderType = ref()
-const { call: getById, loading, error } = useApiCall(api.orderType.getById)
+const {
+  call: getById,
+  loading,
+  error,
+} = useApiCall(v => api.orderType.getById(v, { _dontShowError: true }))
 watch(
   () => props.type,
   async v => {

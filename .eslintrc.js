@@ -75,11 +75,13 @@ module.exports = {
           'v-form',
           'v-select',
           'v-progress-circular',
+          'v-divider',
           'v-container'
         ],
       },
     ],
     'vue/no-v-model-argument': 'off',
+    'vuetify/no-deprecated-components': 'off',
     'vue/html-self-closing': 'off',
     'vue/no-v-for-template-key': 'off',
     'vue/multi-word-component-names': 'off',

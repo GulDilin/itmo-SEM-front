@@ -16,10 +16,7 @@
     >
       <template #prepend>
         <OrderFormOption
-          v-if="
-            order?.order_type?.def_type === OrderDepType.MAIN.key &&
-            OrderStatus.NEW.key === order?.status
-          "
+          v-if="hasOption"
           :parent-order="order"
           :customer-id="order?.user_customer"
           @created="orderTable?.refresh()"
@@ -30,18 +27,24 @@
 </template>
 
 <script setup>
-import { ref, defineAsyncComponent } from 'vue'
+import { computed, defineAsyncComponent, ref } from 'vue'
 import OrderCard from '@/components/Order/OrderCard'
-const OrderFormOption = defineAsyncComponent(() => import('@/components/Order/OrderFormOption'))
-const OrderTable = defineAsyncComponent(() => import('@/components/Order/OrderTable'))
 import api from '@/api'
 import { OrderDepType, OrderStatus } from '@/enums'
 
-defineProps({
+const OrderFormOption = defineAsyncComponent(() => import('@/components/Order/OrderFormOption'))
+const OrderTable = defineAsyncComponent(() => import('@/components/Order/OrderTable'))
+
+const props = defineProps({
   id: String,
   order: Object,
 })
 const emit = defineEmits(['update:order'])
 
 const orderTable = ref()
+const hasOption = computed(
+  () =>
+    props?.order?.order_type?.def_type === OrderDepType.MAIN.key &&
+    OrderStatus.NEW.key === props?.order?.status
+)
 </script>

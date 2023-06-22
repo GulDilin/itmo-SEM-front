@@ -113,7 +113,7 @@ export const fetchAll = async ({
     }
 
     filter = isRef(filter) ? filter.value : filter
-    provider({ filter: filter, options })
+    provider(filter, options)
       .then(({ data }) => {
         items.value.push(...data.results)
         next = data[nextFieldName]

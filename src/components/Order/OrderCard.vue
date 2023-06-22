@@ -46,7 +46,10 @@
           v-if="!editMode"
           class="tw-relative tw--m-4 tw-mt-0 tw-bg-brown tw-bg-opacity-50 tw-p-4"
         >
-          <div v-if="editable" class="tw-absolute tw-top-2 tw-right-2">
+          <div
+            v-if="editable && hasRole(ROLE.STAFF.key) && OrderStatus.NEW.key === item?.status"
+            class="tw-absolute tw-top-2 tw-right-2"
+          >
             <v-btn
               :icon="mdiPencil"
               @click.prevent="editMode = true"
@@ -76,7 +79,7 @@
         />
       </v-card-text>
 
-      <v-card-actions>
+      <v-card-actions v-if="hasRole(ROLE.STAFF.key)">
         <v-btn
           v-if="item?.status === OrderStatus.NEW.key"
           :loading="loading"
@@ -121,6 +124,16 @@
         >
           Отбраковать
         </v-btn>
+        <div class="tw-grow"></div>
+        <v-btn
+          v-if="![OrderStatus.REMOVED.key, OrderStatus.TO_REMOVE.key].includes(item?.status)"
+          color="error"
+          class="tw-ml-auto"
+          :loading="loading"
+          @click.prevent="update(item.id, { status: OrderStatus.TO_REMOVE.key })"
+        >
+          Удалить
+        </v-btn>
       </v-card-actions>
     </v-card>
 
@@ -133,9 +146,10 @@
         v-if="loadingParent"
         indeterminate
       />
+      <!-- eslint-disable-next-line -->
       <OrderCard
         v-if="parentOrder"
-        :item="parentOrder"
+        v-model:item="parentOrder"
       />
     </div>
   </div>
@@ -148,10 +162,10 @@ import { computed, ref } from 'vue'
 import AppStatus from '@/components/App/AppStatus'
 import UserCardWrapped from '@/components/Users/UserCardWrapped'
 import { useApiCall } from '@/composables/useApiCall'
-import { tokenParsed } from '@/composables/useAuth'
+import { hasRole, tokenParsed } from '@/composables/useAuth'
 import useItemsFetcher from '@/composables/useItemsFetcher'
 import api from '@/api'
-import { OrderDepType, OrderStatus } from '@/enums'
+import { OrderDepType, OrderStatus, ROLE } from '@/enums'
 import { getDateTimeString } from '@/utils/time'
 
 const props = defineProps({
@@ -172,8 +186,13 @@ fetchItemsStart()
 
 const { loading, call } = useApiCall(api.orderType.for(props.item?.order_type?.id).orders.update)
 const update = async (it, v) => {
-  const { data } = await call(it, v)
-  emit('update:item', data)
+  try {
+    const { data } = await call(it, v)
+    if (!data) return
+    emit('update:item', data)
+  } catch {
+    // ignore
+  }
 }
 
 const parentOrder = ref()

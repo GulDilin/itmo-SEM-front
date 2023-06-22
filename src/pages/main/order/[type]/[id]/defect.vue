@@ -22,7 +22,14 @@
       <OrderForm
         v-if="order"
         :order-type="defectOrderType"
+        :user-customer="order.user_customer"
         :parent-order-id="order.id"
+        @created="
+          $router.push({
+            name: 'order-type-id',
+            params: { type: defectOrderType?.name, id: $event?.id },
+          })
+        "
       />
     </div>
   </div>

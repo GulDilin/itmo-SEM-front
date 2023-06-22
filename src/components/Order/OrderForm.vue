@@ -49,11 +49,12 @@ watch(
     v?.params?.forEach(({ id }) => (data.value[id] = undefined))
     if (props.editableOrder) {
       props.editableOrder?.params?.forEach(
-        ({ value, order_type_param_id}) => (data.value[order_type_param_id] = value)
+        ({ value, order_type_param_id }) => (data.value[order_type_param_id] = value)
       )
     }
-  }, { immediate: true })
-
+  },
+  { immediate: true }
+)
 
 const loading = ref()
 const form = ref()

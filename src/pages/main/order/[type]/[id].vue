@@ -23,10 +23,6 @@ import api from '@/api'
 
 const props = defineProps({
   id: String,
-  orderType: {
-    type: Object,
-    default: () => ({}),
-  },
 })
 
 const { call, loading, error } = useApiCall(api.orders.getById)

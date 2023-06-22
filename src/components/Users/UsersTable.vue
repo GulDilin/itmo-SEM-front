@@ -43,13 +43,17 @@
 
 <script setup>
 import { mdiMagnify } from '@mdi/js'
-import { ref } from 'vue'
+import { ref, toRef } from 'vue'
 import { VDataTableVirtual } from 'vuetify/labs/VDataTable'
 import useItemsFetcher from '@/composables/useItemsFetcher'
 import api from '@/api'
 
+const props = defineProps({
+  filter: Object,
+})
+const filter = toRef(props, 'filter')
 const { get, getNext } = api.users
-const { items, loading, fetchItemsAll } = useItemsFetcher(get, getNext)
+const { items, loading, fetchItemsAll } = useItemsFetcher(get, getNext, filter)
 
 const headers = [
   {

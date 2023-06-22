@@ -1,7 +1,7 @@
 <template>
   <div class="tw-flex tw-flex-col tw-gap-4">
     <v-btn
-      v-if="orderType.dep_type === OrderDepType.MAIN.key"
+      v-if="orderType.dep_type === OrderDepType.MAIN.key && hasRole(ROLE.STAFF.key)"
       :to="{
         name: 'main-order-type-create',
         params: { ...$route.params },
@@ -21,9 +21,11 @@
 </template>
 
 <script setup>
-import { ref, watch, defineAsyncComponent } from 'vue'
+import { defineAsyncComponent, ref, watch } from 'vue'
+import { hasRole } from '@/composables/useAuth'
+import { OrderDepType, ROLE } from '@/enums'
+
 const OrderTable = defineAsyncComponent(() => import('@/components/Order/OrderTable'))
-import { OrderDepType } from '@/enums'
 
 defineProps({
   orderType: {
