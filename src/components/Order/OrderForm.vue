@@ -8,6 +8,7 @@
         <OrderFormField
           v-for="param in orderType?.params"
           :key="param?.id"
+          :id="`input-${param?.name}`"
           v-model="data[param?.id]"
           :param="param"
         />

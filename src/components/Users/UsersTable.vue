@@ -4,6 +4,7 @@
       <v-text-field
         v-model="search"
         :append-icon="mdiMagnify"
+        id="input-search-customer"
         label="Search"
         variant="outlined"
         density="compact"
