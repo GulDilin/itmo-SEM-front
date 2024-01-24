@@ -30,11 +30,15 @@ export const ROLE = createKeyEnum({
   STAFF_ORDER_MANAGER: { key: 'staff_order_manager', text: 'Сопровождение заказов' },
   STAFF_CUSTOMER_MANAGER: { key: 'staff_customer_manager', text: 'Работа с клиентами' },
   STAFF_AXEMAN: { key: 'staff_axeman', text: 'Лесоруб' },
+  STAFF_DELIVERY: { key: 'staff_delivery', text: 'Отдел доставки' },
+  STAFF_MAGICIAN: { key: 'staff_magician', text: 'Отдел зачарования' },
+  STAFF_CRAFTSMAN: { key: 'staff_craftsman', text: 'Ремесленник' },
 })
 
 export const OrderDepType = createKeyEnum({
   MAIN: { key: 'MAIN', text: 'Основной' },
   DEPEND: { key: 'DEPEND', text: 'Зависимый' },
+  DELIVERY: { key: 'DELIVERY', text: 'Зависимый' },
   OPTIONAL: { key: 'OPTIONAL', text: 'Опциональный' },
   DEFECT: { key: 'DEFECT', text: 'Брак' },
 })
@@ -44,6 +48,12 @@ export const OrderParamType = Object.freeze({
   STR: 'string',
   TEXT: 'text',
   DATE: 'date',
+})
+
+export const MaterialValueType = createKeyEnum({
+  VOLUME: { key: 'VOLUME', text: 'м3' },
+  PIECE: { key: 'PIECE', text: 'шт' },
+  MASS: { key: 'MASS', text: 'кг' },
 })
 
 export const getRolesString = roles =>

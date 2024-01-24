@@ -1,3 +1,4 @@
+import materials from './materials'
 import orderParams from './orderParams'
 import useBasicApi from './useBasicApi'
 import config from '@/config'
@@ -11,6 +12,7 @@ export default function orderApi(parent, orderTypeId) {
     ...useBasicApi(axios, ENDPOINT),
     for: orderId => ({
       params: orderParams(ENDPOINT, orderId),
+      materials: materials(ENDPOINT, orderId),
     }),
   }
 }

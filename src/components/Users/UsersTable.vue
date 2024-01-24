@@ -2,9 +2,9 @@
   <div class="tw-rounded-xl tw-bg-white tw-pb-2">
     <div class="tw-p-2">
       <v-text-field
+        id="input-search-customer"
         v-model="search"
         :append-icon="mdiMagnify"
-        id="input-search-customer"
         label="Search"
         variant="outlined"
         density="compact"

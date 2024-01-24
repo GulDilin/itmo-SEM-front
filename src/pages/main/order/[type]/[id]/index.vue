@@ -7,6 +7,12 @@
       no-link
       @update:item="emit('update:order', $event)"
     />
+    <div class="tw-my-4 tw-text-lg tw-text-light">Материалы</div>
+    <MaterialsTable
+      v-if="order"
+      :order="order"
+      :order-type="order?.order_type"
+    />
     <div class="tw-my-4 tw-text-lg tw-text-light">Связанные</div>
     <OrderTable
       v-if="order"
@@ -28,6 +34,7 @@
 
 <script setup>
 import { computed, defineAsyncComponent, ref } from 'vue'
+import MaterialsTable from '@/components/Materials/MaterialsTable'
 import OrderCard from '@/components/Order/OrderCard'
 import api from '@/api'
 import { OrderDepType, OrderStatus } from '@/enums'

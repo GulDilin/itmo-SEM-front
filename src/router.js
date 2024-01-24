@@ -13,8 +13,7 @@ const router = createRouter({
 const isRolesPassed = ({ to: { matched = [] } }) => {
   const orArray = v => (Array.isArray(v) ? v : [v])
   let val = !matched.some(
-    ({ meta: { requiredRole = undefined } }) =>
-      requiredRole && !orArray(requiredRole).some(hasRole)
+    ({ meta: { requiredRole = undefined } }) => requiredRole && !orArray(requiredRole).some(hasRole)
   )
   if (!val) router.push({ path: '/' })
   return val
@@ -24,10 +23,7 @@ const isDevelopmentCheckPassed = ({ to: { matched = [] } }) =>
   !matched.some(({ meta: { devOnly = false } }) => devOnly && !isDevelopment)
 
 router.beforeEach((to, from, next) => {
-  if (
-    isRolesPassed({ to, from }) &&
-    isDevelopmentCheckPassed({ to })
-  ) {
+  if (isRolesPassed({ to, from }) && isDevelopmentCheckPassed({ to })) {
     return next()
   }
 })
