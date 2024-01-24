@@ -39,5 +39,6 @@ export default defineConfig({
     alias: { '@/': `${resolve(__dirname, 'src')}/` },
     extensions: ['.js', '.vue'],
   },
+  base: isProduction ? '/~s264449/mpi/' : undefined,
   plugins,
 })

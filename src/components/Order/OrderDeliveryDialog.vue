@@ -26,7 +26,7 @@
 
 <script setup>
 import OrderForm from './OrderForm.vue'
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import useItemsFetcher from '@/composables/useItemsFetcher'
 import api from '@/api'
 import { OrderDepType } from '@/enums'

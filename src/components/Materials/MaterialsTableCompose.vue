@@ -19,7 +19,7 @@
 
 <script setup>
 import MaterialsTable from './MaterialsTable.vue'
-import { computed, onMounted, ref, watchEffect } from 'vue'
+import { computed, onMounted, watchEffect } from 'vue'
 import useItemsFetcher from '@/composables/useItemsFetcher'
 import api from '@/api'
 import { OrderDepType } from '@/enums'
