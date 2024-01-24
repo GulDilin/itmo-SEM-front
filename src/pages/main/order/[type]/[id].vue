@@ -12,7 +12,10 @@
     >
       Произошла ошибка
     </v-alert>
-    <RouterView v-model:order="item" />
+    <RouterView
+      v-model:order="item"
+      :order-type="orderType"
+    />
   </div>
 </template>
 
@@ -23,6 +26,10 @@ import api from '@/api'
 
 const props = defineProps({
   id: String,
+  orderType: {
+    type: Object,
+    default: () => ({}),
+  },
 })
 
 const { call, loading, error } = useApiCall(api.orders.getById)

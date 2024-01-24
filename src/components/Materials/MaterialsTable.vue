@@ -21,7 +21,7 @@
           {{ MaterialValueType.getByKey(item.selectable?.value_type)?.text }}
         </template>
         <template #item.summ="{ item }">
-          {{ +item.selectable?.item_price * +item.selectable?.amount }}
+          {{ countCost(item.selectable) }}
         </template>
         <template #item.actions="{ item }">
           <v-btn
@@ -34,13 +34,14 @@
           </v-btn>
         </template>
       </v-data-table-virtual>
+      <div class="tw-px-4">Итого: {{ summ }}</div>
     </v-card-text>
   </v-card>
 </template>
 
 <script setup>
 import MaterialCreateDialog from './MaterialsCreateDialog.vue'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { VDataTableVirtual } from 'vuetify/labs/VDataTable'
 import useItemsFetcher from '@/composables/useItemsFetcher'
 import api from '@/api'
@@ -61,6 +62,8 @@ const { get, getNext } =
   props.api || api.orderType.for(props.orderType?.id).orders.for(props.order?.id).materials
 const { items, loading, fetchItemsAll } = useItemsFetcher(get, getNext)
 
+const countCost = item => +item?.item_price * +item?.amount
+const summ = computed(() => items.value?.map(countCost)?.reduce((acc, cur) => acc + cur, 0) ?? 0)
 fetchItemsAll()
 
 const loadingDelete = ref(false)

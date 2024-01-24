@@ -36,14 +36,15 @@
 </template>
 
 <script setup>
-import { watch } from 'vue'
+import { ref, watch } from 'vue'
 import useItemsFetcher from '@/composables/useItemsFetcher'
 import api from '@/api'
 
 const emit = defineEmits(['update:order-types'])
 
+const filter = ref({ sort: 'created_at' })
 const { get, getNext } = api.orderType
-const { items, loading, fetchItemsAll } = useItemsFetcher(get, getNext)
+const { items, loading, fetchItemsAll } = useItemsFetcher(get, getNext, filter)
 fetchItemsAll()
 watch(items, v => emit('update:order-types', v), { immediate: true })
 </script>

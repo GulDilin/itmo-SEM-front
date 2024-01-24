@@ -7,11 +7,9 @@
       no-link
       @update:item="emit('update:order', $event)"
     />
-    <div class="tw-my-4 tw-text-lg tw-text-light">Материалы</div>
-    <MaterialsTable
+    <MaterialsTableCompose
       v-if="order"
       :order="order"
-      :order-type="order?.order_type"
     />
     <div class="tw-my-4 tw-text-lg tw-text-light">Связанные</div>
     <OrderTable
@@ -33,8 +31,8 @@
 </template>
 
 <script setup>
-import { computed, defineAsyncComponent, ref } from 'vue'
-import MaterialsTable from '@/components/Materials/MaterialsTable'
+import { computed, defineAsyncComponent, ref, toRefs } from 'vue'
+import MaterialsTableCompose from '@/components/Materials/MaterialsTableCompose'
 import OrderCard from '@/components/Order/OrderCard'
 import api from '@/api'
 import { OrderDepType, OrderStatus } from '@/enums'
@@ -45,13 +43,19 @@ const OrderTable = defineAsyncComponent(() => import('@/components/Order/OrderTa
 const props = defineProps({
   id: String,
   order: Object,
+  orderType: {
+    type: Object,
+    default: () => ({}),
+  },
 })
+const { order, orderType } = toRefs(props)
 const emit = defineEmits(['update:order'])
 
 const orderTable = ref()
+
 const hasOption = computed(
   () =>
-    props?.order?.order_type?.def_type === OrderDepType.MAIN.key &&
-    OrderStatus.NEW.key === props?.order?.status
+    orderType.value?.dep_type === OrderDepType.MAIN.key &&
+    OrderStatus.NEW.key === order.value?.status
 )
 </script>

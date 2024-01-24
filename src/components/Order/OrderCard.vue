@@ -124,6 +124,11 @@
         >
           Отбраковать
         </v-btn>
+        <OrderDeliveryDialog
+          v-if="canDeliver"
+          :order="item"
+        />
+
         <div class="tw-grow"></div>
         <v-btn
           v-if="![OrderStatus.REMOVED.key, OrderStatus.TO_REMOVE.key].includes(item?.status)"
@@ -156,9 +161,10 @@
 </template>
 
 <script setup>
+import OrderDeliveryDialog from './OrderDeliveryDialog'
 import OrderForm from './OrderForm'
 import { mdiPencil } from '@mdi/js'
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import AppStatus from '@/components/App/AppStatus'
 import UserCardWrapped from '@/components/Users/UserCardWrapped'
 import { useApiCall } from '@/composables/useApiCall'
@@ -208,4 +214,25 @@ const onSave = it => {
   emit('update:item', it)
   editMode.value = false
 }
+
+const deliveryOrder = ref()
+const { loading: loadingDelivery, call: getDeliveryOrders } = useApiCall(api.orders.get)
+
+const { get: get1, getNext: getNext1 } = api.orderType
+const { items: orderTypes, fetchItemsStart: fetchItemsStart1 } = useItemsFetcher(get1, getNext1)
+
+onMounted(async () => {
+  await fetchItemsStart1()
+  const orderTypeDelivery = orderTypes.value?.findBy({ dep_type: OrderDepType.DELIVERY.key })
+  const { data: deliveryOrderV } = await getDeliveryOrders({ order_type_id: orderTypeDelivery?.id })
+  const deliveryOrderC = deliveryOrderV.results?.filter(it => it?.status !== 'REMOVED')?.lenпth
+  deliveryOrder.value = deliveryOrderC
+})
+const canDeliver = computed(
+  () =>
+    !loadingDelivery.value &&
+    !deliveryOrder.value &&
+    props.item?.status === OrderStatus.ACCEPTED.key &&
+    [OrderDepType.MAIN.key, OrderDepType.DEPEND.key].includes(props.item.order_type?.dep_type)
+)
 </script>
